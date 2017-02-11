@@ -10,7 +10,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("start/StartFrame.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../FX/start/StartFrame.fxml"));
+        if (null == fxmlLoader.getLocation()){
+            throw new Exception("StartFrame.fxml not found");
+        }
         Parent root = fxmlLoader.load();
 
         primaryStage.setTitle("GQ");

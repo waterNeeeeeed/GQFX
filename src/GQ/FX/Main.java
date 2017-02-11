@@ -15,7 +15,6 @@ public class Main extends Application {
 
         primaryStage.setTitle("GQ");
         primaryStage.setScene(new Scene(root, 427, 295));
-        //primaryStage.alwaysOnTopProperty();
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setResizable(false);
         primaryStage.show();

@@ -1,4 +1,4 @@
-package sample;
+package GQ.FX.start;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 
 <Pane fx:id="startFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="sample.StartFrameController">
+      fx:controller="GQ.FX.start.StartFrameController">
    <children>
       <Button fx:id="login" focusTraversable="false" layoutX="155.0" layoutY="188.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="42.0" prefWidth="117.0" text="登陆" />
       <TextField fx:id="username" layoutX="133.0" layoutY="96.0" prefHeight="30.0" prefWidth="178.0" promptText="用户名" />

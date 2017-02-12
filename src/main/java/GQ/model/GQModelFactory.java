@@ -57,7 +57,11 @@ public class GQModelFactory {
         return fl;
     }
 
-    public static void createGQSelfInfo(String id, String username, InetAddress ip, int port){
-        GQSelfInfo.getInstance().setSid(createGQPersonID(id, username, ip, port));
+    public static GQSelfInfo createGQSelfInfo(String id, String username, InetAddress ip, int port){
+        /*GQSelfInfo.getInstance().setSid();*/
+        GQSelfInfo selfInfo = new GQSelfInfo();
+        selfInfo.setSid(createGQPersonID(id, username, ip, port));
+
+        return selfInfo;
     }
 }

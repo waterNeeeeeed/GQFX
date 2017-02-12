@@ -1,11 +1,12 @@
 package GQ.model;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 
 /**
  * Created by 帝 on 2017/2/12.
  */
-public class GQPersonID {
+public class GQPersonID implements Serializable{
     private String id;
     private String username;
     private InetAddress ip;

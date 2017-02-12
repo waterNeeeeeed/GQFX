@@ -21,6 +21,7 @@ public class Main extends Application {
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setResizable(false);
         primaryStage.show();
+        //System.out.println("exit");
     }
 
 

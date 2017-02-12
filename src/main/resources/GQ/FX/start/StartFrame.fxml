@@ -6,16 +6,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<Pane fx:id="startFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="GQ.FX.start.StartFrameController">
+<Pane fx:id="startFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GQ.FX.start.StartFrameController">
    <children>
       <Button fx:id="login" focusTraversable="false" layoutX="155.0" layoutY="188.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="42.0" prefWidth="117.0" text="登陆" />
       <TextField fx:id="username" layoutX="133.0" layoutY="96.0" prefHeight="30.0" prefWidth="178.0" promptText="用户名" />
       <Label layoutX="72.0" layoutY="99.0" prefHeight="23.0" prefWidth="39.0" text="用户名" />
       <Label layoutX="75.0" layoutY="140.0" prefHeight="23.0" prefWidth="39.0" text="密 码" />
       <PasswordField fx:id="passwordField" layoutX="133.0" layoutY="136.0" prefHeight="30.0" prefWidth="178.0" promptText="密码" />
-      <Label fx:id="response" layoutX="118.0" layoutY="44.0" prefHeight="15.0" prefWidth="209.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="response" layoutX="109.0" layoutY="38.0" prefHeight="15.0" prefWidth="209.0" textAlignment="CENTER">
+         <font>
+            <Font size="26.0" />
+         </font></Label>
+
    </children>
    <effect>
       <Blend />

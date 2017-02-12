@@ -30,7 +30,7 @@ public class StartFrameController {
 
     @FXML
     public void loginAction(ActionEvent e){
-        response.setText(passwordField.getText());
+        response.setText("登录中。。。");
         startFrame.setDisable(true);
     }
 

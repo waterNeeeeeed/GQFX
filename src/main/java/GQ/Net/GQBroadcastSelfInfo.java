@@ -15,10 +15,11 @@ import java.util.concurrent.BlockingQueue;
  * Created by 帝 on 2017/2/12.
  */
 public class GQBroadcastSelfInfo implements Runnable{
-    private BlockingQueue<String> blockingQueue;
+    private BlockingQueue<DatagramPacket> blockingQueue;
     private GQSelfInfo selfInfo;
+    private byte[] buffer;// = GQNetUDPFactory.getClientBuffer();
 
-    public GQBroadcastSelfInfo(BlockingQueue<String> bq){
+    public GQBroadcastSelfInfo(BlockingQueue<DatagramPacket> bq){
         blockingQueue = bq;
     }
 
@@ -27,18 +28,11 @@ public class GQBroadcastSelfInfo implements Runnable{
         int ServerPort = GQNetUDPFactory.getDatagramServerPort();
         InetAddress ip = GQNetUDPFactory.getDatagramClientIP();
         int port = GQNetUDPFactory.getDatagramClientPort();
+        selfInfo = GQNetUDPFactory.getSelfInfo();
 
         //创建接收Socket
         DatagramSocket ds = null;
         ds = GQNetUDPFactory.createDatagramSocket(ip, port);
-
-        //创建自己的信息
-        GQSelfInfo selfInfo = GQModelFactory.createGQSelfInfo(null, GQNetUDPFactory.getSelfname(), ServerIP, ServerPort);
-
-        //创建数据报
-        String json = GQJSONUtil.toJSON(selfInfo);
-        byte[] buffer = json.getBytes();
-        DatagramPacket packet = GQNetUDPFactory.createDatagramPacket(buffer, buffer.length, ServerIP, ServerPort);
 
         try {
             if (null != ds){
@@ -49,9 +43,10 @@ public class GQBroadcastSelfInfo implements Runnable{
                 System.exit(0);
             }
             while (true){
-                ds.send(packet);
+                ds.send(blockingQueue.take());
+                System.out.println("Client send...");
                 Thread.sleep(1000);
-                System.out.println("send");
+
             }
         } catch (IOException e) {
             e.printStackTrace();

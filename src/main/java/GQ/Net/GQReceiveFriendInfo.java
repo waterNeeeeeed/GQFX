@@ -32,7 +32,6 @@ public class GQReceiveFriendInfo implements Runnable {
         try {
             if (null != dsServer){
                 System.out.println("Receive start...");
-                System.out.println("Receive:" + dsServer.getInetAddress());
             }
             else {
                 System.out.println("Receive failed...");
@@ -41,6 +40,7 @@ public class GQReceiveFriendInfo implements Runnable {
 
             while(true){
                 dsServer.receive(dsPacket);
+                System.out.println("Receive:" + dsPacket.getAddress().getHostName() + ":" + dsPacket.getAddress().getHostAddress() + ":" + dsPacket.getPort());
                 blockingQueue.put(buffer);
 
             }

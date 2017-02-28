@@ -4,50 +4,60 @@ import GQ.model.GQModelFactory;
 import GQ.model.GQSelfInfo;
 
 import java.net.DatagramPacket;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.FutureTask;
 
 /**
  * Created by 帝 on 2017/2/12.
  */
 public class GQTestNet {
     public static void main(String[] args){
-        GQBroadcastSelfInfo b = new GQBroadcastSelfInfo(GQNetUDPFactory.getSendBQ());
-        new Thread(b).start();
+
         GQReceiveFriendInfo r = new GQReceiveFriendInfo(GQNetUDPFactory.getReceiveBQ());
         new Thread(r).start();
+        /*try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        GQBroadcastSelfInfo b = new GQBroadcastSelfInfo(GQNetUDPFactory.getSendBQ());
+        new Thread(b).start();
+
+
+
+        int n = 0;
+
         new Thread(new Runnable() {
             public void run() {
-                GQSelfInfo selfInfo = GQModelFactory.createGQSelfInfo(null, "gongtao",
-                        GQNetUDPFactory.getDatagramServerIP(), GQNetUDPFactory.getDatagramServerPort());
-
-
-                while(true){
-                    try {
-                        DatagramPacket sp = GQNetUDPFactory.createDatagramPacketToClientBuffer(selfInfo, GQNetUDPFactory.getDatagramServerIP(), GQNetUDPFactory.getDatagramServerPort());
-                        GQNetUDPFactory.getSendBQ().put(sp);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                int m = 0;
+                DatagramPacket tmpDP;
+                while (true){
+                    m++;
+                    tmpDP = GQNetUDPFactory.ReceiveBQDeleteElement();
+                    GQSelfInfo test = GQNetUDPFactory.convertReceiveBufferToRealObject(tmpDP.getData(), GQSelfInfo.class);
+                    System.out.println("Receive:" + test.toString());
+                    //System.out.println("Receive " + m + "条" + ":" + tmpDP.getAddress().getHostName()
+                    //        + ":" + tmpDP.getAddress().getHostAddress() + ":" + tmpDP.getPort());
+                    //System.out.println("%6s" + tmpDP.getAddress().getHostAddress() + ":" + tmpDP.getPort());
                 }
             }
         }).start();
 
-        /*new Thread(o->(){
-            createDatagramPacket(selfInfo, )
-        }).start();*/
 
 
-        while (true){
-            try{
-                GQSelfInfo test = GQNetUDPFactory.convertReceiveBufferToRealObject(GQNetUDPFactory.getReceiveBQ().take(), GQSelfInfo.class);
-                System.out.println(test.toString());
-                //System.out.println("%6s" + dsPacket.getAddress().getHostAddress() + ":" + dsPacket.getPort());
-            }catch (InterruptedException e){
+        while(true){
+            n++;
+            GQSelfInfo selfInfo = GQModelFactory.createGQSelfInfo(String.valueOf(n), "gongtao",
+                    GQNetUDPFactory.getServerIP(), GQNetUDPFactory.getDatagramServerPort());
+            DatagramPacket sp = GQNetUDPFactory.createDatagramPacketToClientBuffer(selfInfo,
+                    GQNetUDPFactory.getServerIP(), GQNetUDPFactory.getDatagramServerPort());
+            GQNetUDPFactory.SendBQAddElement(sp);
+            System.out.println("Send " + n + "条");
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
+
     }
 }

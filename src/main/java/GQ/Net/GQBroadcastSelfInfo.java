@@ -1,14 +1,11 @@
 package GQ.Net;
 
-import GQ.model.GQModelFactory;
 import GQ.model.GQSelfInfo;
-import GQ.util.GQJSONUtil;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -24,7 +21,7 @@ public class GQBroadcastSelfInfo implements Runnable{
     }
 
     public void run(){
-        InetAddress ServerIP = GQNetUDPFactory.getDatagramServerIP();
+        InetAddress ServerIP = GQNetUDPFactory.getServerIP();
         int ServerPort = GQNetUDPFactory.getDatagramServerPort();
         InetAddress ip = GQNetUDPFactory.getDatagramClientIP();
         int port = GQNetUDPFactory.getDatagramClientPort();
@@ -43,14 +40,11 @@ public class GQBroadcastSelfInfo implements Runnable{
                 System.exit(0);
             }
             while (true){
-                ds.send(blockingQueue.take());
                 System.out.println("Client send...");
-                Thread.sleep(1000);
-
+                DatagramPacket sendPacket = GQNetUDPFactory.SendBQDeleteElement();
+                ds.send(sendPacket);
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
